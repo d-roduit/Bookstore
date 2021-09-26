@@ -10,24 +10,34 @@ import javax.persistence.*;
 public class Book {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+    private long id;
+
     private String title;
+
     private String author;
+
     private Year year;
+
     private String isbn;
+
     private BigDecimal price;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     public Book() {}
 
-    public Book(String title, String author, Year year, String isbn, BigDecimal price) {
+    public Book(String title, String author, Year year, String isbn, BigDecimal price, Category category) {
         this.title = title;
         this.author = author;
         this.year = year;
         this.isbn = isbn;
         this.price = price;
+        this.category = category;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -73,6 +83,14 @@ public class Book {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override
