@@ -4,13 +4,14 @@ import ch.droduit.bookstore.domain.Book;
 import ch.droduit.bookstore.domain.BookRepository;
 import ch.droduit.bookstore.domain.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -62,6 +63,26 @@ public class BookController {
     public String deleteBook(@PathVariable("id") long bookId) {
         bookRepository.deleteById(bookId);
         return "redirect:../bookList";
+    }
+
+    @GetMapping("api/books")
+    @ResponseBody
+    public List<Book> getBooks() {
+        Iterable<Book> booksIterable = bookRepository.findAll();
+        List<Book> bookList = new ArrayList<>();
+        booksIterable.forEach(bookList::add);
+        return bookList;
+    }
+
+    @GetMapping("api/books/{id}")
+    @ResponseBody
+    public ResponseEntity<Book> getBookById(@PathVariable("id") long bookId) {
+        Optional<Book> book = bookRepository.findById(bookId);
+        if (book.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(book.get(), HttpStatus.OK);
     }
 
 }
