@@ -6,15 +6,15 @@
     <title>Index</title>
 </head>
 <body class="container">
-    <form th:action="@{/login}" method="POST" class="w-25 mx-auto mt-5">
-        <h1 class="h3 mb-4 font-weight-normal">Bookstore Administration</h1>
-        <label for="username_input">User Name :</label>
+    <form th:action="@{/login}" method="POST" class="mx-auto mt-5 border rounded p-5 shadow" style="width: 40%">
+        <h1 class="h3 mb-4 font-weight-normal text-center text-primary">Bookstore Administration</h1>
+        <label for="username_input" class="mb-1">Username :</label>
         <input type="text" id="username_input" name="username" class="form-control mb-3"/>
-        <label for="password_input">Password :</label>
+        <label for="password_input" class="mb-1">Password :</label>
         <input type="password" id="password_input" name="password" class="form-control mb-4"/>
         <button type="submit" class="btn btn-primary w-100">Sign in</button>
-        <div th:if="${param.error}" class="alert alert-danger mt-3 text-center" role="alert">
-            <p>Invalid username or password.</p>
+        <div th:if="${param.error}" class="alert alert-danger mt-3 mb-0 text-center" role="alert">
+            <p class="mb-1">Invalid username or password.</p>
             <p class="mb-0">Please retry.</p>
         </div>
     </form>
