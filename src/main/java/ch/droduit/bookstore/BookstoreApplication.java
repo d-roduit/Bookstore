@@ -1,9 +1,6 @@
 package ch.droduit.bookstore;
 
-import ch.droduit.bookstore.domain.Book;
-import ch.droduit.bookstore.domain.BookRepository;
-import ch.droduit.bookstore.domain.Category;
-import ch.droduit.bookstore.domain.CategoryRepository;
+import ch.droduit.bookstore.domain.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,7 +18,7 @@ public class BookstoreApplication {
     }
 
     @Bean
-    public CommandLineRunner insertData(BookRepository bookRepository, CategoryRepository categoryRepository) {
+    public CommandLineRunner insertData(BookRepository bookRepository, CategoryRepository categoryRepository, UserRepository userRepository) {
         return (args) -> {
             List<Category> categories = new ArrayList<>();
             Category actionCategory = new Category("Action & Adventure");
@@ -46,6 +43,10 @@ public class BookstoreApplication {
             books.add(new Book("Romeo and Juliet", "Shakespear", Year.of(1597), "0000000000003", new BigDecimal("5.50"), romanceCategory));
             bookRepository.saveAll(books);
 
+            List<User> users = new ArrayList<>();
+            users.add(new User("user", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6", "user@bookstore.com", "USER"));
+            users.add(new User("admin", "$2a$10$0MMwY.IQqpsVc1jC8u7IJ.2rT8b0Cd3b3sfIBGV2zfgnPGtT4r0.C", "admin@bookstore.com", "ADMIN"));
+            userRepository.saveAll(users);
         };
     }
 

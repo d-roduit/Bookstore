@@ -6,6 +6,7 @@ import ch.droduit.bookstore.domain.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,16 @@ public class BookController {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @RequestMapping("login")
+    public String login() {
+        return "login";
+    }
+
+    @PostMapping("logout")
+    public String postLogout() {
+        return "login";
+    }
 
     @GetMapping("index")
     public String index() {
@@ -59,7 +70,9 @@ public class BookController {
         return "redirect:../bookList";
     }
 
+
     @GetMapping("delete/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteBook(@PathVariable("id") long bookId) {
         bookRepository.deleteById(bookId);
         return "redirect:../bookList";
