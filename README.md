@@ -4,7 +4,7 @@
 </h1>
 
 <p align="center">
-    <strong>A book website where you can list the best books you have ever read !</strong>
+    <strong>A book website where you can list the best books you have ever read 📖</strong>
 </p>
 
 </div>
